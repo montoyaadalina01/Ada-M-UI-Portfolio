@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- =============================================
+       META & SEO
+  ============================================= -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Ada Montoya — UI/UX Designer crafting clean, intentional digital experiences."/>
+  <meta name="author" content="Ada Montoya"/>
+
+  <!-- Open Graph (social media previews) -->
+  <meta property="og:title" content="Ada Montoya — UI/UX Designer"/>
+  <meta property="og:description" content="Designing interfaces where clarity meets quiet delight."/>
+  <meta property="og:image" content="assets/og-image.png"/>
+  <meta property="og:url" content="https://yourusername.github.io/portfolio"/>
+  <meta property="og:type" content="website"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Ada Montoya — UI/UX Designer"/>
+  <meta name="twitter:image" content="assets/og-image.png"/>
+
+  <title>Ada Montoya — UI/UX Designer</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
+
+  <!-- =============================================
+       FONTS
+  ============================================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- =============================================
+       STYLESHEET
+  ============================================= -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+  <!-- =============================================
+       CUSTOM CURSOR (desktop only)
+  ============================================= -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <!-- =============================================
+       NAVIGATION
+  ============================================= -->
+  <header>
+    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+      <a href="#hero" class="nav__logo" aria-label="Ada Montoya — Home">
+        Ada<span>.</span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav__links" role="list">
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- CTA button -->
+      <a href="#contact" class="btn btn--nav">Let's Talk</a>
+
+      <!-- Mobile hamburger -->
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu (toggled by JS) -->
+    <div class="nav__mobile" id="mobileMenu" aria-hidden="true">
+      <ul role="list">
+        <li><a href="#projects" class="mobile-link">Work</a></li>
+        <li><a href="#about"    class="mobile-link">About</a></li>
+        <li><a href="#contact"  class="mobile-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =============================================
+         HERO SECTION
+    ============================================= -->
+    <section class="hero" id="hero" aria-label="Introduction">
+      <div class="hero__text">
+        <!-- Availability badge -->
+        <div class="badge" aria-label="Currently available for work">
+          <span class="badge__dot" aria-hidden="true"></span>
+          Available for freelance
+        </div>
+
+        <!-- Name headline -->
+        <h1 class="hero__name">
+          Ada<br>
+          <em>Mercer</em>
+        </h1>
+
+        <!-- Title + tagline -->
+        <p class="hero__title">UI/UX Designer</p>
+        <p class="hero__tagline">
+          Crafting interfaces that feel inevitable — where clarity meets quiet delight.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero__actions">
+          <a href="#projects" class="btn btn--primary">
+            View My Work
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="assets/ada-montoya-resume.pdf" class="btn btn--ghost" target="_blank" rel="noopener">
+            Download CV
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats column -->
+      <div class="hero__stats" aria-label="Career highlights">
+        <div class="stat">
+          <span class="stat__num">6<em>+</em></span>
+          <span class="stat__label">Years experience</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">40<em>+</em></span>
+          <span class="stat__label">Projects shipped</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">98<em>%</em></span>
+          <span class="stat__label">Client satisfaction</span>
+        </div>
+      </div>
+
+      <!-- Scroll cue -->
+      <div class="scroll-cue" aria-hidden="true">
+        <div class="scroll-cue__line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PROJECTS SECTION
+    ============================================= -->
+    <section class="projects" id="projects" aria-label="Selected projects">
+      <div class="section-header reveal">
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-title">Projects that <em>matter</em></h2>
+        <p class="section-sub">
+          End-to-end design across fintech, health, and productivity — each shaped by real user needs.
+        </p>
+      </div>
+
+      <div class="projects__grid">
+
+        <!-- Project Card 1 -->
+        <article class="project-card reveal" aria-label="Vela Finance project">
+          <div class="project-card__visual pv--orange">
+            <!-- Replace with <img src="assets/vela-cover.png" alt="Vela Finance app screens"> -->
+            <div class="project-card__mockup" aria-hidden="true">
+              <div class="mock">
+                <div class="mock__bar"></div>
+                <div class="mock__bar mock__bar--short"></div>
+                <div class="mock__body"></div>
+              </div>
+            </div>
+            <div class="project-card__overlay" aria-hidden="true">
+              <span class="view-label">View Case Study →</span>
+            </div>
+          </div>
+          <div class="project-card__info">
+            <span class="project-tag">Fintech · iOS / Android</span>
+            <h3 class="project-card__title">Vela — Personal Finance OS</h3>
+            <p class="project-card__desc">
+              Reimagined how people relate to money — turning anxiety-inducing dashboards
+              into calm, actionable clarity for 200k+ users.
+            </p>
+            <dl class="project-meta">
+              <div class="project-meta__item">
+                <dt>Problem</dt>
+                <dd>Cognitive overload</dd>
+              </div>
+              <div class="project-meta__item">
+                <dt>Process</dt>
+                <dd>Jobs-to-be-done</dd>
+              </div>
+              <div class="project-meta__item">
+                <dt>Outcome</dt>
+                <dd>+34% retention</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+
+        <!-- Project Card 2 -->
+        <article class="project-card reveal" aria-label="Mend Telehealth project">
+          <div class="project-card__visual pv--blue">
+            <div class="project-card__mockup" aria-hidden="true">
+              <div class="mock">
+                <div class="mock__bar mock__bar--short"></div>
+                <div class="mock__bar"></div>
+                <div class="mock__body"></div>
+              </div>
+            </div>
+            <div class="project-card__overlay" aria-hidden="true">
+              <span class="view-label">View Case Study →</span>
+            </div>
+          </div>
+          <div class="project-card__info">
+            <span class="project-tag">Health · SaaS</span>
+            <h3 class="project-card__title">Mend — Telehealth Platform</h3>
+            <p class="project-card__desc">
+              Reduced patient drop-off by 42% through an empathetic onboarding flow
+              and a redesigned consultation experience.
+            </p>
+            <dl class="project-meta">
+              <div class="project-meta__item">
+                <dt>Problem</dt>
+                <dd>High drop-off</dd>
+              </div>
+              <div class="project-meta__item">
+                <dt>Process</dt>
+                <dd>Contextual inquiry</dd>
+              </div>
+              <div class="project-meta__item">
+                <dt>Outcome</dt>
+                <dd>−42% churn</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+
+        <!-- Project Card 3 — wide -->
+        <article class="project-card project-card--wide reveal" aria-label="Folio Workspace project">
+          <div class="project-card__visual pv--green">
+            <div class="project-card__mockup" aria-hidden="true">
+              <div class="mock">
+                <div class="mock__bar"></div>
+                <div class="mock__bar mock__bar--short"></div>
+                <div class="mock__body"></div>
+              </div>
+            </div>
+            <div class="project-card__overlay" aria-hidden="true">
+              <span class="view-label">View Case Study →</span>
+            </div>
+          </div>
+          <div class="project-card__info">
+            <span class="project-tag">Productivity · Desktop · Web</span>
+            <h3 class="project-card__title">Folio — Design Team Workspace</h3>
+            <p class="project-card__desc">
+              Built the end-to-end design system and product experience for a collaborative
+              workspace tool now used by 500+ design teams worldwide.
+            </p>
+            <dl class="project-meta">
+              <div class="project-meta__item">
+                <dt>Problem</dt>
+                <dd>Feature sprawl</dd>
+              </div>
+              <div class="project-meta__item">
+                <dt>Process</dt>
+                <dd>Design system</dd>
+              </div>
+              <div class="project-meta__item">
+                <dt>Outcome</dt>
+                <dd>4.9★ App Store</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =============================================
+         ABOUT SECTION
+    ============================================= -->
+    <section class="about" id="about" aria-label="About Ada Montoya">
+      <div class="about__grid">
+
+        <!-- Photo column -->
+        <div class="about__photo reveal">
+          <div class="about__frame">
+            <!--
+              Replace the SVG below with a real photo:
+              <img src="assets/ada-montoya.jpg" alt="Ada Montoya, UI/UX Designer">
+            -->
+            <svg class="avatar" viewBox="0 0 200 240" fill="none" aria-label="Ada Montoya photo placeholder">
+              <ellipse cx="100" cy="88" rx="42" ry="42" fill="rgba(200,80,42,.25)" stroke="rgba(200,80,42,.5)" stroke-width="2"/>
+              <circle cx="100" cy="82" r="28" fill="rgba(255,255,255,.3)"/>
+              <ellipse cx="100" cy="195" rx="65" ry="45" fill="rgba(200,80,42,.15)" stroke="rgba(200,80,42,.4)" stroke-width="2"/>
+            </svg>
+          </div>
+          <!-- Floating credential chip -->
+          <div class="about__chip" aria-label="Award: Top Rated on Dribbble, 2024">
+            <div class="chip__icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M9 2l1.8 3.6L15 6.3l-3 2.9.7 4.1L9 11.2l-3.7 2.1.7-4.1L3 6.3l4.2-.7L9 2z" fill="#fff"/>
+              </svg>
+            </div>
+            <div class="chip__text">
+              <strong>Top Rated</strong>
+              <span>Dribbble Pro · 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content column -->
+        <div class="about__content">
+          <p class="section-label reveal">About Me</p>
+          <h2 class="section-title reveal">Design with <em>intention</em></h2>
+
+          <p class="about__intro reveal">
+            I'm Ada — a UI/UX designer based in Georgia with 3 years shaping
+            digital products across fintech, health, and productivity. I work at the
+            intersection of systems thinking and craft, believing that great design
+            feels inevitable once you see it.
+          </p>
+
+          <!-- Philosophy quote -->
+          <blockquote class="about__quote reveal">
+            "Good design is invisible. Great design changes how you feel without you knowing why."
+          </blockquote>
+
+          <!-- Skills -->
+          <ul class="skills" aria-label="Design skills" role="list">
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>Product Strategy</li>
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>User Research</li>
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>Interaction Design</li>
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>Design Systems</li>
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>Prototyping</li>
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>Figma / Framer</li>
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>Usability Testing</li>
+            <li class="skill-pill reveal"><span class="skill-pill__dot" aria-hidden="true"></span>Motion Design</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================
+         CONTACT SECTION
+    ============================================= -->
+    <section class="contact" id="contact" aria-label="Contact Ada Montoya">
+      <div class="contact__wrap">
+
+        <!-- Left: info -->
+        <div class="contact__info">
+          <p class="section-label reveal">Contact</p>
+          <h2 class="section-title reveal">Let's build something <em>great</em></h2>
+          <p class="contact__lead reveal">
+            Whether you have a project in mind, a question, or just want to say hello —
+            my inbox is always open.
+          </p>
+
+          <!-- Direct links -->
+          <address class="contact__links reveal">
+            <a href="mailto:alex@mercer.design" class="contact-link">
+              <span class="contact-link__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </span>
+              alex@mercer.design
+            </a>
+            <a href="tel:+14155550123" class="contact-link">
+              <span class="contact-link__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.8 19.8 0 0 1 1.63 3.35 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </span>
+              +1 (415) 555-0123
+            </a>
+          </address>
+
+          <!-- Social icons -->
+          <div class="social-row reveal" aria-label="Social media links">
+            <a href="https://dribbble.com/yourhandle" class="social-btn" aria-label="Dribbble" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/>
+                <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/>
+                <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/>
+              </svg>
+            </a>
+            <a href="https://linkedin.com/in/yourhandle" class="social-btn" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect width="4" height="12" x="2" y="9"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
+            <a href="https://twitter.com/yourhandle" class="social-btn" aria-label="Twitter / X" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/yourhandle" class="social-btn" aria-label="GitHub" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <form class="contact__form reveal" id="contactForm" novalidate aria-label="Contact form">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Jane Smith"
+              autocomplete="name"
+              required
+              aria-required="true"
+            />
+            <span class="form-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="jane@company.com"
+              autocomplete="email"
+              required
+              aria-required="true"
+            />
+            <span class="form-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Tell me about your project..."
+              rows="5"
+              required
+              aria-required="true"
+            ></textarea>
+            <span class="form-error" aria-live="polite"></span>
+          </div>
+
+          <button type="submit" class="btn btn--submit" id="submitBtn">
+            Send Message
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__logo">Ada<span>.</span></div>
+    <p class="footer__copy">© <span id="year"></span> Ada Montoya — Designed &amp; built with care.</p>
+    <p class="footer__location">Atlanta, GA</p>
+  </footer>
+
+  <!-- =============================================
+       JAVASCRIPT (loaded at end of body for performance)
+  ============================================= -->
+  <script src="main.js"></script>
+
+</body>
+</html>

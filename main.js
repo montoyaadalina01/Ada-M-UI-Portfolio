@@ -302,26 +302,16 @@ function initContactForm() {
     setButtonState('loading');
 
     try {
-      /* ── SWAP THIS BLOCK FOR YOUR REAL ENDPOINT ─────────────────
-         Example with Formspree (free tier, no server needed):
-         1. Sign up at formspree.io
-         2. Create a form and copy the endpoint URL
-         3. Replace the fetch below:
-
-         const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-           body: JSON.stringify({
-             name:    form.name.value,
-             email:   form.email.value,
-             message: form.message.value,
-           }),
-         });
-         if (!response.ok) throw new Error('Network error');
-      ── ─────────────────────────────────────────────────────── */
-
-      // Simulated network delay (remove once real endpoint is wired up)
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const response = await fetch('https://formspree.io/f/xeedpnao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name:    form.name.value,
+          email:   form.email.value,
+          message: form.message.value,
+        }),
+      });
+      if (!response.ok) throw new Error('Network error');
 
       setButtonState('sent');
       form.reset();

@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nudge — UX Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #5b9ee1;
+    --blue-dark: #3a7bbf;
+    --blue-light: #dbeeff;
+    --orange: #f5a623;
+    --green: #4caf87;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --border: #e2ddd6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--blue);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-back {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 7rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-shapes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .shape {
+    position: absolute;
+    border-radius: 4px;
+  }
+
+  .s1 { width: 48px; height: 48px; background: #4caf87; top: 12%; left: 8%; transform: rotate(15deg); }
+  .s2 { width: 32px; height: 80px; background: #f5a623; top: 18%; right: 12%; }
+  .s3 { width: 64px; height: 24px; background: rgba(255,255,255,0.25); bottom: 35%; left: 6%; }
+  .s4 { width: 24px; height: 24px; background: #4caf87; bottom: 25%; right: 18%; border-radius: 50%; }
+  .s5 { width: 80px; height: 16px; background: rgba(255,255,255,0.2); top: 40%; right: 6%; }
+  .s6 { width: 20px; height: 20px; background: #f5a623; top: 55%; left: 20%; border-radius: 50%; }
+  .s7 {
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    top: 30%; left: 40%;
+    box-shadow: 12px 18px 0 white, 28px 8px 0 white, -8px 28px 0 rgba(255,255,255,0.5);
+  }
+
+  .hero-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    color: white;
+    line-height: 0.95;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 400;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-dark);
+    background: var(--blue-light);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  p {
+    color: var(--text-muted);
+    max-width: 640px;
+    margin-bottom: 1rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* OVERVIEW */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .overview-cell {
+    background: var(--white);
+    padding: 2rem;
+  }
+
+  .overview-cell:first-child {
+    grid-column: span 2;
+    background: var(--blue);
+    padding: 3rem;
+  }
+
+  .overview-cell:first-child h3 {
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .overview-cell:first-child p {
+    color: white;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0;
+  }
+
+  .stat-big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--blue);
+    margin-bottom: 0.5rem;
+  }
+
+  /* PROBLEM */
+  .problem-section {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    max-width: 100%;
+    padding: 6rem 4rem;
+  }
+
+  .problem-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .insight-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .insight-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .insight-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--blue-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .insight-card h3 { font-size: 14px; margin-bottom: 2px; }
+  .insight-card p { font-size: 13px; margin: 0; max-width: none; }
+
+  /* FLOW */
+  .flow-section {
+    padding: 6rem 4rem;
+    max-width: 100%;
+    background: #1a1a1a;
+  }
+
+  .flow-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .flow-section .section-tag {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .flow-section h2 {
+    color: white;
+  }
+
+  .flow-section p {
+    color: rgba(255,255,255,0.55);
+  }
+
+  .flow-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .flow-step {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    color: rgba(255,255,255,0.12);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .flow-step h3 {
+    color: white;
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+  }
+
+  .flow-step p {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    max-width: none;
+    margin: 0;
+  }
+
+  .step-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+    background: rgba(91,158,225,0.2);
+    color: #90c4f5;
+    border: 1px solid rgba(91,158,225,0.3);
+  }
+
+  /* SCREENS */
+  .screens-section {
+    padding: 6rem 4rem;
+    max-width: 100%;
+    background: var(--bg);
+  }
+
+  .screens-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .phone-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+
+  .phone-card {
+    flex-shrink: 0;
+    width: 200px;
+  }
+
+  .phone-frame {
+    width: 200px;
+    height: 380px;
+    background: white;
+    border-radius: 28px;
+    border: 6px solid #1a1a1a;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+
+  .phone-notch {
+    width: 70px;
+    height: 20px;
+    background: #1a1a1a;
+    border-radius: 0 0 12px 12px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .phone-status {
+    height: 28px;
+    background: var(--blue);
+    display: flex;
+    align-items: flex-end;
+    padding: 0 12px 4px;
+    justify-content: space-between;
+    font-size: 8px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .phone-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Onboarding screen */
+  .screen-onboard {
+    background: white;
+    padding: 16px 12px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .screen-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-align: center;
+  }
+
+  .screen-sub {
+    font-size: 9px;
+    color: #888;
+    text-align: center;
+  }
+
+  .time-display {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--blue);
+    text-align: center;
+    margin: 4px 0;
+  }
+
+  .slider-mock {
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    position: relative;
+    margin: 4px 0;
+  }
+
+  .slider-fill {
+    width: 60%;
+    height: 100%;
+    background: var(--blue);
+    border-radius: 2px;
+  }
+
+  .slider-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--blue);
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    left: 58%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .seg-control {
+    display: flex;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .seg-opt {
+    flex: 1;
+    font-size: 8px;
+    text-align: center;
+    padding: 4px 0;
+    border-radius: 6px;
+    color: #888;
+  }
+
+  .seg-opt.active {
+    background: white;
+    color: var(--blue);
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .btn-mock {
+    background: var(--blue);
+    color: white;
+    font-size: 9px;
+    font-weight: 500;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: auto;
+  }
+
+  /* Dashboard screen */
+  .screen-dash {
+    background: white;
+    padding: 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .screen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 4px 0;
+  }
+
+  .nudge-logo-sm {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--blue);
+  }
+
+  .nudge-logo-sm span { color: #f5a623; }
+
+  .timer-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 6px solid #eee;
+    border-top-color: var(--blue);
+    border-right-color: var(--blue);
+    margin: 4px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue);
+    position: relative;
+  }
+
+  .mini-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .mini-stat {
+    background: #f7f7f7;
+    border-radius: 6px;
+    padding: 5px 6px;
+    font-size: 8px;
+  }
+
+  .mini-stat-val {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--blue);
+  }
+
+  .mini-stat-label { color: #aaa; }
+
+  .top-apps {
+    background: #f7f7f7;
+    border-radius: 6px;
+    padding: 6px;
+  }
+
+  .top-apps-title {
+    font-size: 8px;
+    color: #aaa;
+    margin-bottom: 4px;
+  }
+
+  .app-row-mini {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 3px;
+  }
+
+  .app-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    flex-shrink: 0;
+  }
+
+  .app-bar-bg {
+    flex: 1;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .app-bar-fill {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 2px;
+  }
+
+  .app-time { font-size: 7px; color: #aaa; }
+
+  /* Nudge style screens */
+  .screen-nudge {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .nudge-icon-lg {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #f0f7ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .nudge-screen-title {
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    color: #1a1a1a;
+  }
+
+  .nudge-screen-sub {
+    font-size: 8px;
+    color: #888;
+    text-align: center;
+  }
+
+  .btn-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+  }
+
+  .btn-primary-sm {
+    background: var(--blue);
+    color: white;
+    font-size: 8px;
+    text-align: center;
+    padding: 7px;
+    border-radius: 7px;
+  }
+
+  .btn-outline-sm {
+    border: 1px solid #ddd;
+    color: #888;
+    font-size: 8px;
+    text-align: center;
+    padding: 6px;
+    border-radius: 7px;
+  }
+
+  .phone-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 12px;
+    color: var(--text);
+  }
+
+  .phone-sublabel {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  /* NUDGE STYLES */
+  .styles-section {
+    background: white;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    max-width: 100%;
+    padding: 6rem 4rem;
+  }
+
+  .styles-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .styles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .style-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    background: var(--bg);
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .style-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .style-card h3 { font-size: 15px; margin-bottom: 4px; }
+  .style-card p { font-size: 13px; max-width: none; margin-bottom: 0.5rem; }
+
+  .style-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+  }
+
+  /* TEAM */
+  .team-section {
+    padding: 6rem 4rem;
+    max-width: 100%;
+    background: var(--blue);
+  }
+
+  .team-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .team-section .section-tag {
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+  }
+
+  .team-section h2 { color: white; }
+
+  .team-section p { color: rgba(255,255,255,0.65); max-width: 500px; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .team-card {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .team-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .team-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .team-role {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* REFLECTIONS */
+  .reflections-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .reflection-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .reflection-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--blue-light);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .reflection-card h3 { font-size: 15px; margin-bottom: 0.5rem; }
+  .reflection-card p { font-size: 13px; max-width: none; margin: 0; }
+
+  /* FOOTER */
+  footer {
+    background: #1a1a1a;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 13px;
+  }
+
+  footer strong { color: rgba(255,255,255,0.8); }
+
+  footer a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: white; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-label, .hero-title, .hero-meta {
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title { animation-delay: 0.1s; }
+  .hero-meta { animation-delay: 0.25s; }
+
+  @media (max-width: 768px) {
+    section, .problem-inner { padding: 4rem 1.5rem; grid-template-columns: 1fr; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .hero-title { font-size: 3.5rem; }
+    .overview-grid, .flow-steps, .styles-grid, .team-grid, .reflections-grid { grid-template-columns: 1fr; }
+    .overview-cell:first-child { grid-column: span 1; }
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-dot"></div>
+    Nudge — Case Study
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#flow">Onboarding</a></li>
+    <li><a href="#screens">Screens</a></li>
+    <li><a href="#styles">Nudge styles</a></li>
+    <li><a href="#reflections">Reflections</a></li>
+  </ul>
+  <a href="index.html" class="nav-back">← Back to portfolio</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-shapes">
+    <div class="shape s1"></div>
+    <div class="shape s2"></div>
+    <div class="shape s3"></div>
+    <div class="shape s4"></div>
+    <div class="shape s5"></div>
+    <div class="shape s6"></div>
+    <div class="shape s7"></div>
+  </div>
+  <div class="hero-label">UX / Mobile App Design · iOS</div>
+  <div class="hero-title">Nudge<br><em>App</em></div>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Team</span>
+      <span class="meta-value">Team Nudge · 6 members</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Focus</span>
+      <span class="meta-value">Screen-time management</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Platform</span>
+      <span class="meta-value">iOS Mobile App</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Tools</span>
+      <span class="meta-value">Figma · Prototyping</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-tag">Overview</div>
+  <h2>A smarter way to reclaim your screen time</h2>
+  <p>Nudge is a social media screen-time manager that helps users set daily limits and choose how they want to be reminded when they hit them, without feeling punished for it.</p>
+
+  <div class="overview-grid">
+    <div class="overview-cell">
+      <h3>The core idea</h3>
+      <p>Most screen-time apps treat users like children hard blocks, alarms, shame. Nudge takes a different approach: give people agency over how they're interrupted. You pick your "Nudge Style." You set your limit. The app and Buddy, the cactus mascot  does the rest without judgment.</p>
+    </div>
+    <div class="overview-cell">
+      <div class="stat-big">4</div>
+      <h3>Nudge styles designed</h3>
+      <p style="font-size:13px;">Passcode lock, full block, greyscale, and take a break each respecting different personalities and goals.</p>
+    </div>
+    <div class="overview-cell">
+      <div class="stat-big">6</div>
+      <h3>Core app screens</h3>
+      <p style="font-size:13px;">Onboarding, dashboard, nudge history, insights, settings, and intervention states  all prototyped end-to-end.</p>
+    </div>
+    <div class="overview-cell">
+      <div class="stat-big">5</div>
+      <h3>Step onboarding flow</h3>
+      <p style="font-size:13px;">A guided setup that lets users configure their apps, limit, and nudge style before ever seeing the dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROBLEM -->
+<div class="problem-section" id="problem">
+  <div class="problem-inner">
+    <div>
+      <div class="section-tag">The problem</div>
+      <h2>Awareness alone doesn't change behavior</h2>
+      <p>Existing tools like Screen Time on iOS tell you how much time you've spent, but offer blunt, one-size-fits-all solutions when you go over. Hard blocks feel punishing. Soft reminders get ignored. Neither respects that different users need different interventions.</p>
+      <p>The question we asked: what if the app adapted to your personality, instead of forcing you to adapt to it?</p>
+    </div>
+    <div>
+      <div class="insight-cards">
+        <div class="insight-card">
+          <div class="insight-icon">⏱️</div>
+          <div>
+            <h3>People underestimate usage</h3>
+            <p>Users consistently report that they spend less time on social media than they actually do. awareness is the first step.</p>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">🚫</div>
+          <div>
+            <h3>Hard blocks breed workarounds</h3>
+            <p>Existing apps with total blocks are commonly bypassed by deleting and reinstalling apps, or using browsers.</p>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">🎯</div>
+          <div>
+            <h3>Agency increases compliance</h3>
+            <p>Users who choose their intervention method are more likely to respect it than users who have one imposed on them.</p>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon">🌵</div>
+          <div>
+            <h3>Tone matters</h3>
+            <p>The cactus mascot "Buddy" was designed to notice without judging "Not mad. Just noticed." shifts the emotional dynamic.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ONBOARDING FLOW -->
+<div class="flow-section" id="flow">
+  <div class="flow-inner">
+    <div class="section-tag">Onboarding</div>
+    <h2>Getting started in 5 steps</h2>
+    <p>Before the user ever sees a dashboard, Nudge walks them through a focused setup flow building investment in their own choices.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num">01</div>
+        <div class="step-tag">Time limit</div>
+        <h3>Set your daily limit</h3>
+        <p>A slider and segmented control lets users pick their total daily social media time from 15 minutes to 4+ hours. Framed as "How long on social apps today?" rather than a restriction.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">02</div>
+        <div class="step-tag">Intervention</div>
+        <h3>Choose your nudge style</h3>
+        <p>Four distinct options Passcode Unlock, Full Block, Greyscale, Take a Break each described with a tone, not a warning. Users select what fits their personality.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">03</div>
+        <div class="step-tag">Exceptions</div>
+        <h3>Set app exceptions</h3>
+        <p>Some apps should never be blocked messaging, maps, payments. Users whitelist what matters so Nudge never gets in the way of what's important.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">04</div>
+        <div class="step-tag">Tracking</div>
+        <h3>Select apps to track</h3>
+        <p>Instagram, TikTok, Twitter/X, YouTube, Reddit, Snapchat, Discord, Pinterest users choose exactly which apps count toward their limit.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">05</div>
+        <div class="step-tag">Accountability</div>
+        <h3>Create a passcode</h3>
+        <p>For Passcode Unlock style users, this step creates the code a trusted person holds adding a social accountability layer that makes bypassing require real effort.</p>
+      </div>
+      <div class="flow-step" style="background: rgba(91,158,225,0.08); border-color: rgba(91,158,225,0.25);">
+        <div class="step-num" style="color: rgba(91,158,225,0.3);">✓</div>
+        <div class="step-tag" style="background: rgba(91,158,225,0.15); color: #90c4f5; border-color: rgba(91,158,225,0.3);">Done</div>
+        <h3 style="color: white;">Dashboard ready</h3>
+        <p>With setup complete, the dashboard populates with the user's chosen limits and starts tracking immediately. Buddy is watching gently.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREENS -->
+<div class="screens-section" id="screens">
+  <div class="screens-inner">
+    <div class="section-tag">Core screens</div>
+    <h2>The main app experience</h2>
+    <p>From onboarding to daily use the key screens that make up the Nudge experience.</p>
+
+    <div class="phone-row">
+
+      <!-- Onboarding S1 -->
+      <div class="phone-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status" style="background:#1a1a1a; color:rgba(255,255,255,0.7);">9:41 ▌▌▌ 🔋</div>
+            <div class="phone-content">
+              <div class="screen-onboard">
+                <div style="height:20px;"></div>
+                <div class="screen-title">Set Your Daily Limit</div>
+                <div class="screen-sub">How long on social apps today?</div>
+                <div class="time-display">2h 00m</div>
+                <div class="slider-mock">
+                  <div class="slider-fill"></div>
+                  <div class="slider-thumb"></div>
+                </div>
+                <div class="seg-control">
+                  <div class="seg-opt">15m</div>
+                  <div class="seg-opt active">1h</div>
+                  <div class="seg-opt">2h</div>
+                  <div class="seg-opt">3h+</div>
+                </div>
+                <div class="btn-mock">Next →</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Set limit</div>
+        <div class="phone-sublabel">Step 1 of 5</div>
+      </div>
+
+      <!-- Nudge Style picker -->
+      <div class="phone-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status" style="background:#1a1a1a; color:rgba(255,255,255,0.7);">9:41 ▌▌▌ 🔋</div>
+            <div class="phone-content">
+              <div class="screen-onboard" style="gap:5px;">
+                <div style="height:10px;"></div>
+                <div class="screen-title">Choose Your Nudge Style</div>
+                <div class="screen-sub">What happens when time runs out?</div>
+                <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+                  <div style="border:1.5px solid var(--blue);border-radius:8px;padding:6px 8px;background:#f0f7ff;display:flex;align-items:center;gap:6px;">
+                    <div style="font-size:14px;">🔐</div>
+                    <div style="flex:1;">
+                      <div style="font-size:9px;font-weight:500;color:#1a1a1a;">Passcode Unlock</div>
+                      <div style="font-size:7px;color:#888;">Requires a code to continue</div>
+                    </div>
+                    <div style="width:10px;height:10px;border-radius:50%;background:var(--blue);border:2px solid white;box-shadow:0 0 0 1.5px var(--blue);"></div>
+                  </div>
+                  <div style="border:1px solid #eee;border-radius:8px;padding:6px 8px;display:flex;align-items:center;gap:6px;">
+                    <div style="font-size:14px;">⛔</div>
+                    <div style="flex:1;">
+                      <div style="font-size:9px;font-weight:500;color:#1a1a1a;">Full Block</div>
+                      <div style="font-size:7px;color:#888;">Hard stop on the app</div>
+                    </div>
+                    <div style="width:10px;height:10px;border-radius:50%;border:1.5px solid #ddd;"></div>
+                  </div>
+                  <div style="border:1px solid #eee;border-radius:8px;padding:6px 8px;display:flex;align-items:center;gap:6px;">
+                    <div style="font-size:14px;">🌑</div>
+                    <div style="flex:1;">
+                      <div style="font-size:9px;font-weight:500;color:#1a1a1a;">Greyscale</div>
+                      <div style="font-size:7px;color:#888;">Screen loses color appeal</div>
+                    </div>
+                    <div style="width:10px;height:10px;border-radius:50%;border:1.5px solid #ddd;"></div>
+                  </div>
+                  <div style="border:1px solid #eee;border-radius:8px;padding:6px 8px;display:flex;align-items:center;gap:6px;">
+                    <div style="font-size:14px;">⏸️</div>
+                    <div style="flex:1;">
+                      <div style="font-size:9px;font-weight:500;color:#1a1a1a;">Take a Break</div>
+                      <div style="font-size:7px;color:#888;">Timer-based cool down</div>
+                    </div>
+                    <div style="width:10px;height:10px;border-radius:50%;border:1.5px solid #ddd;"></div>
+                  </div>
+                </div>
+                <div class="btn-mock">Next →</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Nudge style</div>
+        <div class="phone-sublabel">Step 2 of 5</div>
+      </div>
+
+      <!-- Dashboard -->
+      <div class="phone-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status" style="background:var(--blue); color:rgba(255,255,255,0.8);">9:41 ▌▌▌ 🔋</div>
+            <div class="phone-content">
+              <div class="screen-dash">
+                <div class="screen-header">
+                  <div class="nudge-logo-sm">▶<span>Nudge</span></div>
+                  <div style="font-size:9px;color:#aaa;">⚙️</div>
+                </div>
+                <div class="timer-circle">1:24</div>
+                <div class="mini-stats">
+                  <div class="mini-stat">
+                    <div class="mini-stat-val">47m</div>
+                    <div class="mini-stat-label">Used today</div>
+                  </div>
+                  <div class="mini-stat">
+                    <div class="mini-stat-val">1:13</div>
+                    <div class="mini-stat-label">Remaining</div>
+                  </div>
+                  <div class="mini-stat">
+                    <div class="mini-stat-val">5</div>
+                    <div class="mini-stat-label">Nudges accepted</div>
+                  </div>
+                  <div class="mini-stat">
+                    <div class="mini-stat-val">2</div>
+                    <div class="mini-stat-label">Nudges ignored</div>
+                  </div>
+                </div>
+                <div class="top-apps">
+                  <div class="top-apps-title">Top apps today</div>
+                  <div class="app-row-mini">
+                    <div class="app-dot" style="background:#e1306c;"></div>
+                    <div class="app-bar-bg"><div class="app-bar-fill" style="width:72%;background:#e1306c;"></div></div>
+                    <div class="app-time">24m</div>
+                  </div>
+                  <div class="app-row-mini">
+                    <div class="app-dot" style="background:#ff0050;"></div>
+                    <div class="app-bar-bg"><div class="app-bar-fill" style="width:45%;background:#ff0050;"></div></div>
+                    <div class="app-time">15m</div>
+                  </div>
+                  <div class="app-row-mini">
+                    <div class="app-dot" style="background:#1da1f2;"></div>
+                    <div class="app-bar-bg"><div class="app-bar-fill" style="width:22%;background:#1da1f2;"></div></div>
+                    <div class="app-time">8m</div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-around;background:#f7f7f7;border-radius:8px;padding:6px;margin-top:auto;">
+                  <div style="font-size:7px;text-align:center;color:var(--blue);">🏠 Home</div>
+                  <div style="font-size:7px;text-align:center;color:#aaa;">⚡ Nudges</div>
+                  <div style="font-size:7px;text-align:center;color:#aaa;">📊 Insights</div>
+                  <div style="font-size:7px;text-align:center;color:#aaa;">⚙️ Settings</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Dashboard</div>
+        <div class="phone-sublabel">Usage at a glance</div>
+      </div>
+
+      <!-- Buddy noticed -->
+      <div class="phone-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status" style="background:#1a1a1a; color:rgba(255,255,255,0.7);">9:41 ▌▌▌ 🔋</div>
+            <div class="phone-content">
+              <div class="screen-nudge" style="background:white;">
+                <div style="font-size:40px;margin-bottom:4px;">🌵</div>
+                <div style="font-size:13px;font-weight:500;color:#1a1a1a;text-align:center;">Buddy noticed.</div>
+                <div style="font-size:9px;color:#888;text-align:center;">Not mad. Just noticed.</div>
+                <div style="background:#f7f7f7;border-radius:10px;padding:10px 12px;width:100%;margin:8px 0;">
+                  <div style="font-size:8px;color:#aaa;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">You went over by</div>
+                  <div style="font-size:18px;font-weight:500;color:#1a1a1a;">24 minutes</div>
+                  <div style="height:0.5px;background:#e0e0e0;margin:8px 0;"></div>
+                  <div style="font-size:8px;color:#aaa;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">What you ignored</div>
+                  <div style="font-size:11px;color:#555;">Passcode prompt ×1</div>
+                </div>
+                <div class="btn-row">
+                  <div class="btn-primary-sm">Go to dashboard</div>
+                  <div class="btn-outline-sm">Dismiss</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Buddy noticed</div>
+        <div class="phone-sublabel">Gentle accountability</div>
+      </div>
+
+      <!-- Insights -->
+      <div class="phone-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status" style="background:var(--blue); color:rgba(255,255,255,0.8);">9:41 ▌▌▌ 🔋</div>
+            <div class="phone-content">
+              <div class="screen-dash" style="gap:5px;">
+                <div class="screen-header">
+                  <div class="nudge-logo-sm">▶<span>Nudge</span></div>
+                </div>
+                <div style="font-size:10px;font-weight:500;color:#1a1a1a;">Your insights</div>
+                <div style="display:flex;gap:4px;align-items:center;background:#f7f7f7;border-radius:8px;padding:8px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:14px;">👤</div>
+                  <div>
+                    <div style="font-size:9px;font-weight:500;color:#1a1a1a;">Ashley Yelverton</div>
+                    <div style="font-size:7px;color:#aaa;">🔥 4-day streak</div>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+                  <div style="background:#f0f7ff;border-radius:7px;padding:7px;">
+                    <div style="font-size:13px;font-weight:500;color:var(--blue);">12</div>
+                    <div style="font-size:7px;color:#888;">Days under limit</div>
+                  </div>
+                  <div style="background:#f0fff7;border-radius:7px;padding:7px;">
+                    <div style="font-size:13px;font-weight:500;color:#4caf87;">87%</div>
+                    <div style="font-size:7px;color:#888;">Nudges accepted</div>
+                  </div>
+                </div>
+                <div style="background:#f7f7f7;border-radius:8px;padding:7px;flex:1;">
+                  <div style="font-size:7px;color:#aaa;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.06em;">This week</div>
+                  <div style="display:flex;align-items:flex-end;gap:3px;height:40px;">
+                    <div style="flex:1;background:var(--blue);opacity:0.4;border-radius:2px;height:60%;"></div>
+                    <div style="flex:1;background:var(--blue);opacity:0.6;border-radius:2px;height:80%;"></div>
+                    <div style="flex:1;background:var(--blue);border-radius:2px;height:100%;"></div>
+                    <div style="flex:1;background:var(--blue);opacity:0.5;border-radius:2px;height:70%;"></div>
+                    <div style="flex:1;background:var(--blue);opacity:0.3;border-radius:2px;height:45%;"></div>
+                    <div style="flex:1;background:var(--blue);opacity:0.7;border-radius:2px;height:90%;"></div>
+                    <div style="flex:1;background:#eee;border-radius:2px;height:30%;"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;margin-top:3px;">
+                    <span style="font-size:6px;color:#bbb;">M</span>
+                    <span style="font-size:6px;color:#bbb;">T</span>
+                    <span style="font-size:6px;color:#bbb;">W</span>
+                    <span style="font-size:6px;color:#bbb;">T</span>
+                    <span style="font-size:6px;color:#bbb;">F</span>
+                    <span style="font-size:6px;color:#bbb;">S</span>
+                    <span style="font-size:6px;color:#bbb;">S</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-around;background:#f7f7f7;border-radius:8px;padding:6px;">
+                  <div style="font-size:7px;text-align:center;color:#aaa;">🏠 Home</div>
+                  <div style="font-size:7px;text-align:center;color:#aaa;">⚡ Nudges</div>
+                  <div style="font-size:7px;text-align:center;color:var(--blue);">📊 Insights</div>
+                  <div style="font-size:7px;text-align:center;color:#aaa;">⚙️ Settings</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-label">Insights</div>
+        <div class="phone-sublabel">Streaks &amp; patterns</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- NUDGE STYLES -->
+<div class="styles-section" id="styles">
+  <div class="styles-inner">
+    <div class="section-tag">Nudge styles</div>
+    <h2>Four ways to say enough</h2>
+    <p>The defining design decision of Nudge rather than one intervention for everyone, users choose the approach that fits how they think about limits.</p>
+
+    <div class="styles-grid">
+      <div class="style-card">
+        <div class="style-icon" style="background:#fff0f5;">🔐</div>
+        <div>
+          <h3>Passcode unlock</h3>
+          <p>When time runs out, a passcode screen blocks the app. The code is held by a trusted person parent, partner, friend adding real social friction to override it.</p>
+          <span class="style-pill" style="background:#fff0f5;color:#a0405e;">Social accountability</span>
+        </div>
+      </div>
+      <div class="style-card">
+        <div class="style-icon" style="background:#fff5f0;">⛔</div>
+        <div>
+          <h3>Full block</h3>
+          <p>A hard stop. The app is completely inaccessible once the limit is reached. A mascot screen explains why "You've reached today's limit" with an option to request an override.</p>
+          <span class="style-pill" style="background:#fff5f0;color:#993c1d;">Maximum friction</span>
+        </div>
+      </div>
+      <div class="style-card">
+        <div class="style-icon" style="background:#f5f5f5;">🌑</div>
+        <div>
+          <h3>Greyscale</h3>
+          <p>The screen loses all color, making it visually unappealing without locking you out entirely. Restores at midnight. A subtle environmental cue that doesn't feel punitive.</p>
+          <span class="style-pill" style="background:#f5f5f5;color:#555;">Ambient friction</span>
+        </div>
+      </div>
+      <div class="style-card">
+        <div class="style-icon" style="background:#f0fff8;">⏸️</div>
+        <div>
+          <h3>Take a break</h3>
+          <p>A gentle timer 15, 30, or 60 minutes asks the user to step away and come back refreshed. Buddy congratulates them on starting their break. Low pressure, high agency.</p>
+          <span class="style-pill" style="background:#f0fff8;color:#2e7d54;">Gentle reminder</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="team-section">
+  <div class="team-inner">
+    <div class="section-tag">The team</div>
+    <h2>Team Nudge</h2>
+    <p>Six designers, one cactus mascot, and a shared belief that screen time tools should feel human.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">OE</div>
+        <div>
+          <div class="team-name">Orryn Echols</div>
+          <div class="team-role">UX Design</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">NA</div>
+        <div>
+          <div class="team-name">Novintzki Ariste</div>
+          <div class="team-role">UX Design</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">GG</div>
+        <div>
+          <div class="team-name">Grey Gibson</div>
+          <div class="team-role">UX Design</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">EM</div>
+        <div>
+          <div class="team-name">Erick Montaya</div>
+          <div class="team-role">UX Design</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">BL</div>
+        <div>
+          <div class="team-name">Bethany Lee</div>
+          <div class="team-role">UX Design</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">AY</div>
+        <div>
+          <div class="team-name">Ashley Yelverton</div>
+          <div class="team-role">UX Design</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REFLECTIONS -->
+<section id="reflections">
+  <div class="section-tag">Reflections</div>
+  <h2>What we learned</h2>
+  <p>Designing Nudge pushed us to think about behavior change, emotional design, and the ethics of digital wellness.</p>
+
+  <div class="reflections-grid">
+    <div class="reflection-card">
+      <div class="reflection-num">01</div>
+      <h3>Choice is the intervention</h3>
+      <p>The single most impactful design decision wasn't any one nudge style it was giving users the choice. Autonomy in setup creates commitment to the outcome.</p>
+    </div>
+    <div class="reflection-card">
+      <div class="reflection-num">02</div>
+      <h3>Tone is a design material</h3>
+      <p>The language "Not mad. Just noticed." changed how the whole app felt. A mascot that notices without judging required constant copy and illustration iteration to get right.</p>
+    </div>
+    <div class="reflection-card">
+      <div class="reflection-num">03</div>
+      <h3>Friction needs calibration</h3>
+      <p>Too much friction and users abandon the app. Too little and it has no effect. The four nudge styles let users find their own equilibrium reducing churn from frustrated users.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Nudge App</strong> — UX Case Study · Team Nudge · Designed in Figma
+  <br><br>
+  <a href="index.html">← Back to portfolio</a>
+</footer>
+
+</body>
+</html>

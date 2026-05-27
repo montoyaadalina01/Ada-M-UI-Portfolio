@@ -70,8 +70,8 @@ function initCursor() {
   }
 
   function animateCursor() {
-    cursorX = lerp(cursorX, mouseX, 0.18);
-    cursorY = lerp(cursorY, mouseY, 0.18);
+    cursorX = lerp(cursorX, mouseX, 0.6);
+    cursorY = lerp(cursorY, mouseY, 0.6);
 
     cursor.style.left = `${cursorX}px`;
     cursor.style.top  = `${cursorY}px`;
